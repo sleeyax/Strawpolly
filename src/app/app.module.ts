@@ -10,6 +10,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import appRoutes from './routes';
+import {debug} from './config.json';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import appRoutes from './routes';
     AppRoutingModule,
     BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    RouterModule.forRoot(appRoutes, { enableTracing: debug }),
+    FormsModule,
     HeaderModule
   ],
   providers: [],
