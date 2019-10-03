@@ -2,15 +2,12 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
 
     <!-- Navbar brand -->
-    <mdb-navbar-brand><a class="navbar-brand" href="#">{{title}}</a></mdb-navbar-brand>
+    <mdb-navbar-brand><a class="navbar-brand" routerLink="/">{{title}}</a></mdb-navbar-brand>
 
     <!-- Collapsible content -->
     <links>
         <!-- Links  left-->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link waves-light" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link waves-light" mdbWavesEffect>About</a>
             </li>
@@ -40,10 +37,10 @@
 
         <ng-template #notLoggedIn>
             <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item">
+                <li class="nav-item" routerLink="/login" routerLinkActive="active">
                     <a class="nav-link waves-light" mdbWavesEffect>Login</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" routerLink="/register" routerLinkActive="active">
                     <a class="nav-link waves-light" mdbWavesEffect>Register</a>
                 </li>
             </ul>
