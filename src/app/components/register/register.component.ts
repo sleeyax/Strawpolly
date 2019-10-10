@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import User from '../../models/user';
+import {ApiService} from '../../services/api.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -7,18 +8,23 @@ import User from '../../models/user';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  formSubmitted : boolean = false;
-  model: User = new User('', '', '', '');
+  public formSubmitted : boolean = false;
+  public registrationForm: FormGroup = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)]]
+  });
 
-  constructor() { }
+  constructor(private api: ApiService, private fb: FormBuilder) {}
 
   ngOnInit() {
   }
 
   onFormSubmit() {
     this.formSubmitted = true;
-    // TODO: use api service to submit data
-    console.log(this.model);
+    this.api.addMember(this.registrationForm.value)
+      .subscribe((response) => console.log(response));
   }
 
 }
