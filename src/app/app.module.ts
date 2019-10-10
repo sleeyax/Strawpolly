@@ -9,9 +9,10 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import appRoutes from './routes';
+import {appRoutes} from './routes';
 import {debug} from './config.json';
 import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {FormsModule} from '@angular/forms';
     MDBBootstrapModule.forRoot(),
     RouterModule.forRoot(appRoutes, { enableTracing: debug }),
     FormsModule,
-    HeaderModule
+    HeaderModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
