@@ -11,7 +11,8 @@ import {appRoutes} from './routes';
 import {debug} from './config.json';
 import {FormsModule} from '@angular/forms';
 import {FormsModule as MyReactiveFormsModule} from './modules/forms.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {SecurityInterceptor} from './services/interceptors/security.interceptor.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,11 @@ import {HttpClientModule} from '@angular/common/http';
     MyReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: SecurityInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
