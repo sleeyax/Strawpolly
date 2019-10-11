@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -7,12 +8,17 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Input() title: string;
-  // TODO: check if user is logged in
+
   isLoggedIn: boolean = false;
 
-  constructor() { }
+  constructor(private storage: StorageService) {
+    this.isLoggedIn = this.storage.token != null;
+  }
 
   ngOnInit() {
   }
 
+  logout() {
+    this.storage.deleteValue(this.storage.keys.TOKEN);
+  }
 }
