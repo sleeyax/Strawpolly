@@ -4,6 +4,7 @@ import {LoginComponent} from '../components/login/login.component';
 import {RegisterComponent} from '../components/register/register.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ButtonsModule, InputsModule} from 'angular-bootstrap-md';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {ButtonsModule, InputsModule} from 'angular-bootstrap-md';
     CommonModule,
     ReactiveFormsModule,
     ButtonsModule,
-    InputsModule
+    InputsModule,
+    RouterModule
   ],
   exports: [
     LoginComponent,
