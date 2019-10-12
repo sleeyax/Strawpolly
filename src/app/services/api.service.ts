@@ -3,7 +3,6 @@ import {apiEndpoint} from '../config.json';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import User from '../models/user';
-import {StorageService} from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +11,14 @@ export class ApiService {
   private api: string = `${apiEndpoint}/api`;
   private readonly membersResource: string = '/members';
 
-  constructor(private http: HttpClient, private storage: StorageService) {}
+  constructor(private http: HttpClient) {}
 
   /**
-   * Log user in
-   * @param user
+   * Log member in
+   * @param member
    */
-  public authenticate(user: {email: string, password: string}) {
-    return this.sendPost(`${this.membersResource}/authenticate`, user);
+  public authenticateMember(member: {email: string, password: string}) {
+    return this.sendPost(`${this.membersResource}/authenticate`, member);
   }
 
   /**
