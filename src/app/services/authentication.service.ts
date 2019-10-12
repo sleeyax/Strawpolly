@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {ApiService} from './api.service';
 import {StorageService} from './storage.service';
+import Token from '../helpers/token';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import {StorageService} from './storage.service';
  * Authenticates members, stores tokens and provides access to API resources
  */
 export class AuthenticationService {
-  public memberIsAuthenticatedBehaviorSubject: BehaviorSubject<boolean> = new BehaviorSubject(this.storage.token != null);
+  public memberIsAuthenticatedBehaviorSubject: BehaviorSubject<Token> = new BehaviorSubject(this.storage.token != null ? new Token(this.storage.token) : null);
 
   constructor(private api: ApiService, private storage: StorageService) { }
 
@@ -48,7 +49,7 @@ export class AuthenticationService {
     this.storage.token = response.token;
 
     // let all subscribers know the login was successful
-    this.memberIsAuthenticatedBehaviorSubject.next(true);
+    this.memberIsAuthenticatedBehaviorSubject.next(new Token(response.token));
   }
 
   /**
@@ -58,6 +59,6 @@ export class AuthenticationService {
     this.storage.deleteValue(this.storage.keys.TOKEN);
 
     // Let all subscribers know the member signed out
-    this.memberIsAuthenticatedBehaviorSubject.next(false);
+    this.memberIsAuthenticatedBehaviorSubject.next(null);
   }
 }

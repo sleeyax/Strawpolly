@@ -10,10 +10,19 @@ import {Router} from '@angular/router';
 export class HeaderComponent implements OnInit {
   @Input() title: string;
 
-  isLoggedIn: boolean = false;
+  public isLoggedIn: boolean = false;
+  public username: string;
 
   constructor(private auth: AuthenticationService, private router: Router) {
-    auth.memberIsAuthenticatedBehaviorSubject.subscribe((value) => this.isLoggedIn = value);
+    auth.memberIsAuthenticatedBehaviorSubject.subscribe((token) => {
+      if (token) {
+        this.isLoggedIn = true;
+        this.username = token.getClaim('FirstName');
+      }
+      else {
+        this.isLoggedIn = false;
+      }
+    });
   }
 
   ngOnInit() {
