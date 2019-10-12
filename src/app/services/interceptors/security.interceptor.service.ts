@@ -4,13 +4,14 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {StorageService} from '../storage.service';
+import {AuthenticationService} from '../authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class SecurityInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private storage: StorageService) { }
+  constructor(private router: Router, private storage: StorageService, private auth: AuthenticationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.storage.token;
@@ -26,6 +27,9 @@ export class SecurityInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(err => {
         if (err.status === 401) {
+          // token was modified by l33t hacker, log out
+          if (token) this.auth.logout();
+
           this.router.navigate(['login']);
         }
 

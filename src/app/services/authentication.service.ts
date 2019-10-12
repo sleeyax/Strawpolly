@@ -12,7 +12,7 @@ import Token from '../helpers/token';
  * Authenticates members, stores tokens and provides access to API resources
  */
 export class AuthenticationService {
-  public memberIsAuthenticatedBehaviorSubject: BehaviorSubject<Token> = new BehaviorSubject(this.storage.token != null ? new Token(this.storage.token) : null);
+  public memberIsAuthenticatedBehaviorSubject: BehaviorSubject<Token> = new BehaviorSubject(this.getCurrentToken());
 
   constructor(private api: ApiService, private storage: StorageService) { }
 
@@ -60,5 +60,23 @@ export class AuthenticationService {
 
     // Let all subscribers know the member signed out
     this.memberIsAuthenticatedBehaviorSubject.next(null);
+  }
+
+  /**
+   * Returns the token from storage or null if it doesn't exist or is invalid
+   */
+  private getCurrentToken() {
+    const token = this.storage.token;
+
+    if (!token) return null;
+
+    try {
+      return new Token(token);
+    }
+    // token is malformed
+    catch (e) {
+      this.storage.deleteValue(this.storage.keys.TOKEN);
+      return null;
+    }
   }
 }
