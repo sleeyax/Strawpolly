@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ApiService} from '../../services/api.service';
-import {StorageService} from '../../services/storage.service';
+import {AuthenticationService} from '../../services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,33 +17,28 @@ export class LoginComponent implements OnInit {
     rememberMe: [false]
   });
 
-  constructor(private api: ApiService, private fb: FormBuilder, private storage: StorageService) { }
+  constructor(
+    private auth: AuthenticationService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit() {
   }
 
   onFormSubmit() {
     this.formSubmitted = true;
-    const user = {
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    };
-    this.api.authenticate(user).subscribe(
-      (response) => this.handleLoginSuccess(response),
-      (error) => this.handleLoginError(error)
+    this.auth.login(
+      this.loginForm.value.email,
+      this.loginForm.value.password,
+      (err) => {
+        // TODO: show login failed error in form
+        this.formSubmitted = false;
+      },
+      (response) => {
+        // ...
+        this.router.navigateByUrl('/');
+      }
     );
-  }
-
-  private handleLoginError(response) {
-    // TODO: show 'invalid password' etc. in form
-    console.log(response.error.message || 'Login failed');
-  }
-
-  private handleLoginSuccess(response) {
-    console.log(response);
-    if (!response.token)
-      throw 'Token not found in response!';
-    // TODO: navigate back to homescreen after login
-    this.storage.token = response.token;
   }
 }
