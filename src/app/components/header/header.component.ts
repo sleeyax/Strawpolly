@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StorageService} from '../../services/storage.service';
+import {AuthenticationService} from '../../services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,14 +12,15 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean = false;
 
-  constructor(private storage: StorageService) {
-    this.isLoggedIn = this.storage.token != null;
+  constructor(private auth: AuthenticationService, private router: Router) {
+    auth.memberIsAuthenticatedBehaviorSubject.subscribe((value) => this.isLoggedIn = value);
   }
 
   ngOnInit() {
   }
 
   logout() {
-    this.storage.deleteValue(this.storage.keys.TOKEN);
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 }
