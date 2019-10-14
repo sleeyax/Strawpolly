@@ -1,0 +1,35 @@
+.poll-form {
+  position: relative;
+  /* blue line row thing */
+  .field-wrapper {
+    border-bottom: 1px solid blue;
+    width: 100%;
+    .field {
+      background: none;
+      border: none;
+      height: 50px;
+      font-size: 15px;
+      padding: 10px 10px 10px 50px;
+      width: 100%;
+    }
+  }
+   /* title or question */
+  .title {
+    font-weight: bold;
+  }
+  /** kantlijn */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 25px;
+    width: 5px;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+  }
+  /* bottom buttons and settings */
+  .bottom {
+    padding-left: 50px;
+  }
+}

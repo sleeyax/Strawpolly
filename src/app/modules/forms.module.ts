@@ -5,11 +5,13 @@ import {RegisterComponent} from '../components/register/register.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ButtonsModule, InputsModule} from 'angular-bootstrap-md';
 import {RouterModule} from '@angular/router';
+import {PollFormComponent} from '../components/poll.form/poll.form.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PollFormComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import {RouterModule} from '@angular/router';
   ],
   exports: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PollFormComponent
   ]
 })
 export class FormsModule { }

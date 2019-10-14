@@ -1,0 +1,19 @@
+<div class="container mt-3">
+    <h2 class="text-center">Create a new poll</h2>
+
+    <form class="poll-form" [formGroup]="pollForm" (ngSubmit)="onFormSubmit()">
+        <div class="field-wrapper">
+            <input type="text" class="field title" formControlName="title" placeholder="Enter title or question">
+        </div>
+
+        <div formArrayName="fields">
+            <div class="field-wrapper" *ngFor="let field of fields.controls; let i=index;">
+                 <input type="text" class="field" value="{{field.value}}" formControlName="{{i}}" placeholder="Option #{{i+1}}" (focus)="onFieldFocused(i)">
+            </div>
+        </div>
+
+        <div class="bottom">
+            <button class="btn btn-info my-4" type="submit" [disabled]="formSubmitted">Create</button>
+        </div>
+    </form>
+</div>
