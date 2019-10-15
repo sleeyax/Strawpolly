@@ -13,11 +13,13 @@ import {FormsModule} from '@angular/forms';
 import {FormsModule as MyReactiveFormsModule} from './modules/forms.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SecurityInterceptor} from './services/interceptors/security.interceptor.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
