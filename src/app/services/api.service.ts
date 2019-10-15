@@ -3,6 +3,7 @@ import {apiEndpoint} from '../config.json';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import User from '../models/user';
+import {Poll} from '../models/poll';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import User from '../models/user';
 export class ApiService {
   private api: string = `${apiEndpoint}/api`;
   private readonly membersResource: string = '/members';
+  private readonly pollsResource: string = '/polls';
 
   constructor(private http: HttpClient) {}
 
@@ -37,7 +39,7 @@ export class ApiService {
    * @param options
    */
   private sendPost<T>(resource: string, data: Object) {
-    return this.http.post(`${this.api}${resource}`, data);
+    return this.http.post<T>(`${this.api}${resource}`, data);
   }
 
   /**
@@ -53,5 +55,20 @@ export class ApiService {
    */
   public addMember(member: User) {
     return this.sendPost<User>(this.membersResource, member);
+  }
+
+  /**
+   * Add a new poll
+   * @param poll
+   */
+  public createPoll(poll: Poll) {
+    return this.sendPost<JsonResponse>(this.pollsResource, poll);
+  }
+
+  /**
+   * Returns a list of all polls
+   */
+  public getPolls() {
+    return this.sendGet<Poll[]>(this.pollsResource);
   }
 }
