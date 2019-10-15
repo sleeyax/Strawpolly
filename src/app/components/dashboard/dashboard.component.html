@@ -1,0 +1,26 @@
+<div class="container mt-3">
+    <h2 class="text-center">My polls</h2>
+    <div class="row">
+        <div class="col" *ngFor="let poll of polls">
+            <mdb-card>
+                <mdb-card-body>
+                    <mdb-card-title>
+                        <h4>{{poll.name}}</h4>
+                    </mdb-card-title>
+                    <mdb-card-text>
+                        <ul>
+                            <li *ngFor="let answer of poll.answers">
+                                {{shorten(answer.answer)}}
+                            </li>
+                        </ul>
+                    </mdb-card-text>
+                    <div class="flex-row">
+                        <a class="card-link">View</a>
+                        <a class="card-link">Edit</a>
+                        <a class="card-link">Delete</a>
+                    </div>
+                </mdb-card-body>
+            </mdb-card>
+        </div>
+    </div>
+</div>
