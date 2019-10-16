@@ -54,7 +54,10 @@ export class PollFormComponent implements OnInit {
 
     // TODO: catch errors and re-route to dashboard if success
     apiMethod(poll).subscribe(
-      (response) => console.log(response),
+      (response) => {
+        console.log(response);
+        this.router.navigateByUrl('/');
+      },
       (err) => console.error(err)
     );
   }

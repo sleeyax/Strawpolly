@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,11 @@ export class RegisterComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(8)]]
   });
 
-  constructor(private api: ApiService, private fb: FormBuilder) {}
+  constructor(
+    private api: ApiService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit() {
   }
@@ -24,7 +29,10 @@ export class RegisterComponent implements OnInit {
   onFormSubmit() {
     this.formSubmitted = true;
     this.api.addMember(this.registrationForm.value)
-      .subscribe((response) => console.log(response));
+      .subscribe((response) => {
+        console.log(response);
+        this.router.navigateByUrl('/login');
+      });
   }
 
 }
