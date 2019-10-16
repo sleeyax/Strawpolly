@@ -14,12 +14,12 @@ import {FormsModule as MyReactiveFormsModule} from './modules/forms.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SecurityInterceptor} from './services/interceptors/security.interceptor.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {DashboardModule} from './modules/dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +29,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     RouterModule.forRoot(appRoutes, { enableTracing: debug }),
     FormsModule,
     HeaderModule,
+    DashboardModule,
     MyReactiveFormsModule,
     HttpClientModule
   ],
