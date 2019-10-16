@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, Validators} from '@angular/forms';
 import {Answer, Poll} from '../../models/poll';
 import {ApiService} from '../../services/api.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-poll.form',
@@ -14,10 +15,27 @@ export class PollFormComponent implements OnInit {
     title: ['', [Validators.required]],
     fields: this.fb.array([this.createField()])
   });
+  // whether or not the form is used to edit a poll instead of creating one
+  public isEdit: boolean = false;
 
-  constructor(private fb: FormBuilder, private api: ApiService) {}
+  private pollId: number = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const id = Number.parseInt(params.get('id'));
+      if (!isNaN(id) && id != null) {
+        this.pollId = id;
+        this.isEdit = true;
+        this.populateFields(id);
+      }
+    });
   }
 
   onFormSubmit() {
@@ -29,13 +47,15 @@ export class PollFormComponent implements OnInit {
       .filter((field) => field != "")
       .map((field) => new Answer(field));
 
-    const poll = new Poll(this.pollForm.value.title, answers);
+    const poll = new Poll(this.pollId, this.pollForm.value.title, answers);
     console.log(poll);
 
+    const apiMethod = (poll) => this.isEdit ? this.api.editPoll(poll) : this.api.createPoll(poll);
+
     // TODO: catch errors and re-route to dashboard if success
-    this.api.createPoll(poll).subscribe(
+    apiMethod(poll).subscribe(
       (response) => console.log(response),
-      (err) => console.log(err)
+      (err) => console.error(err)
     );
   }
 
@@ -61,5 +81,19 @@ export class PollFormComponent implements OnInit {
    */
   public get fields() {
     return this.pollForm.get('fields') as FormArray;
+  }
+
+  /**
+   * Populate fields with data from specified poll
+   * @param pollId
+   */
+  private populateFields(pollId: number) {
+    this.api.getPoll(pollId).subscribe(poll => {
+      console.log(poll);
+      this.pollForm = this.fb.group({
+        title: [poll.name, Validators.required],
+        fields: this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]))
+      });
+    }, err => console.log(err));
   }
 }

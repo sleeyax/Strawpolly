@@ -73,5 +73,34 @@ export class ApiService {
     return this.sendPost<User>(this.membersResource, member);
   }
 
+  /**
+   * Add a new poll
+   * @param poll
+   */
+  public createPoll(poll: Poll) {
+    return this.sendPost<Poll>(this.pollsResource, poll);
+  }
 
+  /**
+   * Returns a list of all polls
+   */
+  public getPolls() {
+    return this.sendGet<Poll[]>(this.pollsResource);
+  }
+
+  /**
+   * Get a specific poll
+   * @param pollId
+   */
+  public getPoll(pollId: number) {
+    return this.sendGet<Poll>(`${this.pollsResource}/${pollId}`);
+  }
+
+  public editPoll(poll: Poll) {
+    return this.sendPut<Poll>(`${this.pollsResource}/${poll.pollID}`, poll);
+  }
+
+  public deletePoll(pollId: number) {
+    return this.sendDelete(`${this.pollsResource}/${pollId}`);
+  }
 }

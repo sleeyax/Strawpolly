@@ -9,5 +9,6 @@ export const appRoutes: Routes = [
   {path: '', component: DashboardComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'polls/new', component: PollFormComponent}
+  {path: 'polls/new', component: PollFormComponent},
+  {path: 'polls/edit/:id', component: PollFormComponent}
 ];

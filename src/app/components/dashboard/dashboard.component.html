@@ -16,8 +16,8 @@
                     </mdb-card-text>
                     <div class="flex-row">
                         <a class="card-link">View</a>
-                        <a class="card-link">Edit</a>
-                        <a class="card-link">Delete</a>
+                        <a class="card-link" [routerLink]="['polls/edit', poll.pollID]">Edit</a>
+                        <a class="card-link" (click)="deletePoll(poll.pollID)">Delete</a>
                     </div>
                 </mdb-card-body>
             </mdb-card>
