@@ -36,10 +36,26 @@ export class ApiService {
    * Sends a POST request to the specified resource
    * @param resource
    * @param data
-   * @param options
    */
   private sendPost<T>(resource: string, data: Object) {
     return this.http.post<T>(`${this.api}${resource}`, data);
+  }
+
+  /**
+   * Sends a PUT request to the specified resource
+   * @param resource
+   * @param data
+   */
+  private sendPut<T>(resource: string, data: Object) {
+    return this.http.put<T>(`${this.api}${resource}`, data);
+  }
+
+  /**
+   * Sends a DELETE request to the specified resource
+   * @param resource
+   */
+  private sendDelete<T>(resource: string) {
+    return this.http.delete<T>(`${this.api}${resource}`);
   }
 
   /**
@@ -57,18 +73,5 @@ export class ApiService {
     return this.sendPost<User>(this.membersResource, member);
   }
 
-  /**
-   * Add a new poll
-   * @param poll
-   */
-  public createPoll(poll: Poll) {
-    return this.sendPost<JsonResponse>(this.pollsResource, poll);
-  }
 
-  /**
-   * Returns a list of all polls
-   */
-  public getPolls() {
-    return this.sendGet<Poll[]>(this.pollsResource);
-  }
 }
