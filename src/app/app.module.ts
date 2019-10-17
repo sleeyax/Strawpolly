@@ -13,8 +13,8 @@ import {FormsModule} from '@angular/forms';
 import {FormsModule as MyReactiveFormsModule} from './modules/forms.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SecurityInterceptor} from './services/interceptors/security.interceptor.service';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {DashboardModule} from './modules/dashboard.module';
+import {FriendsModule} from './modules/friends.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +30,7 @@ import {DashboardModule} from './modules/dashboard.module';
     FormsModule,
     HeaderModule,
     DashboardModule,
+    FriendsModule,
     MyReactiveFormsModule,
     HttpClientModule
   ],
