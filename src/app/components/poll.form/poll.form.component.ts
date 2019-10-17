@@ -17,7 +17,6 @@ export class PollFormComponent implements OnInit {
   });
   // whether or not the form is used to edit a poll instead of creating one
   public isEdit: boolean = false;
-
   private pollId: number = null;
 
   constructor(
@@ -41,7 +40,7 @@ export class PollFormComponent implements OnInit {
   onFormSubmit() {
     // TODO: check if form is valid
 
-    console.log(this.pollForm.value);
+    console.log('form: ' + this.pollForm.value);
 
     const answers = this.pollForm.value.fields
       .filter((field) => field != "")
@@ -52,7 +51,7 @@ export class PollFormComponent implements OnInit {
 
     const apiMethod = (poll) => this.isEdit ? this.api.editPoll(poll) : this.api.createPoll(poll);
 
-    // TODO: catch errors and re-route to dashboard if success
+    // TODO: catch errors
     apiMethod(poll).subscribe(
       (response) => {
         console.log(response);
@@ -92,11 +91,10 @@ export class PollFormComponent implements OnInit {
    */
   private populateFields(pollId: number) {
     this.api.getPoll(pollId).subscribe(poll => {
+      console.log(this.pollForm);
       console.log(poll);
-      this.pollForm = this.fb.group({
-        title: [poll.name, Validators.required],
-        fields: this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]))
-      });
+      this.pollForm.controls.title.setValue(poll.name);
+      this.pollForm.controls.fields = this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]))
     }, err => console.log(err));
   }
 }
