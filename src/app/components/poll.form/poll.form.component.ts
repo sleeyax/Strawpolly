@@ -39,10 +39,7 @@ export class PollFormComponent implements OnInit {
 
   onFormSubmit() {
     // TODO: check if form is valid
-
-    console.log('form: ' + this.pollForm.value);
-
-    const answers = this.pollForm.value.fields
+    const answers = this.pollForm.controls.fields.value
       .filter((field) => field != "")
       .map((field) => new Answer(field));
 
