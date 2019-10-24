@@ -1,27 +1,28 @@
 # Strawpolly
+Strawpoll/voting application, written in Angular. Backend can be found [here](https://github.com/sleeyax/Strawpolly-api).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
+## General information
+The main purpose of this app is to provide a private space for you and your friends to
+vote on polls.
 
-## Development server
+## Friends
+Every user (let's call them members) can add a friend by their email address. If no member with that email exists, an email will be sent containing a link to create a new account.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+These are the currently available 'friendship states':
 
-## Code scaffolding
+**Pending**
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+A friend request has been sent and is waiting for approval.
 
-## Build
+**Accepted**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Friend request has been approved. You are now friends!
 
-## Running unit tests
+**Declined**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Your friend request has been denied. The other member must either approve your request or remove it in order for you to submit a new request. 
 
-## Running end-to-end tests
+**Blocked**
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+You have been blocked by another member. Any action related to that member will be impossible, unless the block has been lifted.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
