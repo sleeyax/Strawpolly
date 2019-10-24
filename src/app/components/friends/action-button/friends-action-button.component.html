@@ -1,0 +1,9 @@
+<div class="btn-group" mdbDropdown>
+    <button mdbDropdownToggle type="button" mdbBtn class="dropdown-toggle waves-light" [ngClass]="'btn-' + color" mdbWavesEffect>
+        {{text}}
+    </button>
+
+    <div class="dropdown-menu dropdown-primary">
+        <a *ngFor="let actionName of getKeys(actions)" class="dropdown-item" (click)="executeAction(actionName)">{{actionName}}</a>
+    </div>
+</div>
