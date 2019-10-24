@@ -1,1 +1,9 @@
-<app-friends-list></app-friends-list>
+<div class="container">
+    <div *ngIf="friendRequests?.length > 0">
+        <h2>Friend requests</h2>
+        <friend-list [friends]="friendRequests" [isIncoming]="true"></friend-list>
+    </div>
+
+    <h2>Friends</h2>
+    <friend-list [friends]="friends" [isIncoming]="false"></friend-list>
+</div>
