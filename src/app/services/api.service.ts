@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import User from '../models/user';
 import {Poll} from '../models/poll';
+import {Friend} from '../models/friend';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class ApiService {
   private api: string = `${apiEndpoint}/api`;
   private readonly membersResource: string = '/members';
   private readonly pollsResource: string = '/polls';
+  private readonly friendsResource: string = '/friends';
 
   constructor(private http: HttpClient) {}
 
@@ -96,11 +98,46 @@ export class ApiService {
     return this.sendGet<Poll>(`${this.pollsResource}/${pollId}`);
   }
 
+  /**
+   * Edit poll
+   * @param poll
+   */
   public editPoll(poll: Poll) {
     return this.sendPut<Poll>(`${this.pollsResource}/${poll.pollID}`, poll);
   }
 
+  /**
+   * Delete poll with specified id
+   * @param pollId
+   */
   public deletePoll(pollId: number) {
     return this.sendDelete(`${this.pollsResource}/${pollId}`);
+  }
+
+  /**
+   * Returns a list of all friends
+   * @param memberId
+   */
+  public getFriends() {
+    return this.sendGet<Friend[]>(`${this.friendsResource}`);
+  }
+
+  /**
+   * Returns a list of incoming friend requests
+   */
+  public getFriendRequests() {
+    return this.sendGet<Friend[]>(`${this.friendsResource}/requests`);
+  }
+
+  /**
+   * Edit friend relationship (status)
+   * @param friend
+   */
+  public editFriend(friend: Friend) {
+    return this.sendPut(`${this.friendsResource}/${friend.friendID}`, friend);
+  }
+
+  public deleteFriend(friendID: number) {
+    return this.sendDelete(`${this.friendsResource}/${friendID}`);
   }
 }
