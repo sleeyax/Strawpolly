@@ -1,18 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FriendsListComponent} from '../components/friends.list/friends.list.component';
+import {
+  ButtonsModule,
+  DropdownModule,
+  MdbTableDirective,
+  MdbTableRowDirective,
+  MdbTableSortDirective,
+  TableModule
+} from 'angular-bootstrap-md';
 import {FriendsComponent} from '../components/friends/friends.component';
+import {FriendsActionButtonComponent} from '../components/friends/action-button/friends-action-button.component';
+import {FriendsListComponent} from '../components/friends/list/friends-list.component';
 
 @NgModule({
   declarations: [
-    FriendsListComponent,
-    FriendsComponent
+    FriendsComponent,
+    FriendsActionButtonComponent,
+    FriendsListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TableModule,
+    ButtonsModule,
+    DropdownModule
   ],
   exports: [
-    FriendsListComponent
+    FriendsComponent
   ]
 })
 export class FriendsModule { }
