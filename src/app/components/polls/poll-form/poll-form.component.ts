@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, Validators} from '@angular/forms';
 import {Answer, Poll} from '../../../models/poll';
 import {ApiService} from '../../../services/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Friend} from '../../../models/friend';
 
 @Component({
   selector: 'app-poll-form',
@@ -13,11 +14,14 @@ export class PollFormComponent implements OnInit {
   public formSubmitted: boolean = false;
   public pollForm = this.fb.group({
     title: ['', [Validators.required]],
-    fields: this.fb.array([this.createField()])
+    fields: this.fb.array([this.createField()]),
+    invitedFriends: ['', Validators.required]
   });
   // whether or not the form is used to edit a poll instead of creating one
   public isEdit: boolean = false;
   private pollId: number = null;
+
+  public friends: Friend[];
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +39,10 @@ export class PollFormComponent implements OnInit {
         this.populateFields(id);
       }
     });
+    this.api.getVerifiedFriends().subscribe(
+      friends => this.friends = friends.map(f => this.appendFullName(f)),
+      err => console.error(err)
+    );
   }
 
   onFormSubmit() {
@@ -43,8 +51,7 @@ export class PollFormComponent implements OnInit {
       .filter((field) => field != "")
       .map((field) => new Answer(field));
 
-    const poll = new Poll(this.pollId, this.pollForm.value.title, answers);
-    console.log(poll);
+    const poll = new Poll(this.pollId, this.pollForm.value.title, answers, this.pollForm.value.invitedFriends);
 
     const apiMethod = (poll) => this.isEdit ? this.api.editPoll(poll) : this.api.createPoll(poll);
 
@@ -56,6 +63,17 @@ export class PollFormComponent implements OnInit {
       },
       (err) => console.error(err)
     );
+  }
+
+  /**
+   * Add full name property to the friend object
+   * NOTE: according to the docs of ng-select, you should be able to use a ng-template
+   *       but that doesn't work here for some reason ¯\_(ツ)_/¯
+   * @param friend
+   */
+  private appendFullName(friend: Friend) {
+    friend.friend['fullName'] = friend.friend.firstName + ' ' + friend.friend.lastName;
+    return friend;
   }
 
   /**
@@ -88,10 +106,11 @@ export class PollFormComponent implements OnInit {
    */
   private populateFields(pollId: number) {
     this.api.getPoll(pollId).subscribe(poll => {
-      console.log(this.pollForm);
-      console.log(poll);
       this.pollForm.controls.title.setValue(poll.name);
       this.pollForm.controls.fields = this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]))
+      // this.pollForm.controls.invitedFriends = this.fb.array(poll.participants.map(participant => [participant, Validators.required]));
+      // TODO: update invited friends
+      console.log(this.pollForm.controls.invitedFriends);
     }, err => console.log(err));
   }
 }

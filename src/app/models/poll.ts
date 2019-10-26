@@ -3,5 +3,5 @@ export class Answer {
 }
 
 export class Poll {
-  constructor(public pollID: number, public name: string, public answers: Answer[]) {};
+  constructor(public pollID: number, public name: string, public answers: Answer[], public participantIds: number[]) {};
 }
