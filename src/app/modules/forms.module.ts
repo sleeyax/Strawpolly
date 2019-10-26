@@ -7,6 +7,7 @@ import {ButtonsModule, InputsModule} from 'angular-bootstrap-md';
 import {RouterModule} from '@angular/router';
 import {PollFormComponent} from '../components/polls/poll-form/poll-form.component';
 import {FriendRequestFieldComponent} from '../components/friends/request-field/friend-request-field.component';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FriendRequestFieldComponent} from '../components/friends/request-field/f
     ReactiveFormsModule,
     ButtonsModule,
     InputsModule,
-    RouterModule
+    RouterModule,
+    NgSelectModule
   ],
   exports: [
     LoginComponent,
