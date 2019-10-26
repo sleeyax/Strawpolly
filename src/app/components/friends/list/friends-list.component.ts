@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Friend} from '../../../models/friend';
-import FriendStatus from '../../../models/friend-status';
 
 @Component({
   selector: 'friend-list',
@@ -20,9 +19,4 @@ export class FriendsListComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  buildFriend(friendID: number, friendStatus: FriendStatus) {
-    return new Friend(friendID, friendStatus);
-  }
-
 }

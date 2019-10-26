@@ -11,7 +11,7 @@
         <th scope="row">{{friend.friend.firstName}}</th>
         <td>{{friend.friend.lastName}}</td>
         <td>
-            <friends-action-button [friend]="buildFriend(friend.friendID, friend.friendStatus)" [isIncoming]="isIncoming"></friends-action-button>
+            <friends-action-button [friend]="friend" [isIncoming]="isIncoming"></friends-action-button>
         </td>
     </tr>
     </tbody>
