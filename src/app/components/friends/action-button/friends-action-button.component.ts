@@ -65,7 +65,7 @@ export class FriendsActionButtonComponent implements OnInit {
         this.color = 'danger';
         this.text = 'Blocked';
         this.actions = {
-          'Unblock': this.remove,
+          'Remove': this.remove,
         };
         break;
       case FriendStatus.Declined:
@@ -76,6 +76,13 @@ export class FriendsActionButtonComponent implements OnInit {
           'Remove': this.remove
         };
         break;
+      case FriendStatus.Removed:
+        this.color = 'secondary';
+        this.text = 'Removed';
+        this.actions = {
+          'Resend friend request': () => this.add([this.friend.friend.email])
+        };
+        break;
       default:
         throw `Unknown FriendStatus (${friendStatus})`;
     }
@@ -84,28 +91,32 @@ export class FriendsActionButtonComponent implements OnInit {
   // Accept FR
   private accept() {
     console.log("Accepting FR - friendID: " + this.friend.friendID);
-    this.friendStatusBHS.next(this.friend.friendStatus = FriendStatus.Accepted);
-    this.saveChanges();
+    this.changeFriendStatus(FriendStatus.Accepted);
   }
 
   // Decline FR
   private decline() {
     console.log("Declining FR - friendID: " + this.friend.friendID);
-    this.friendStatusBHS.next(this.friend.friendStatus = FriendStatus.Declined);
-    this.saveChanges();
+    this.changeFriendStatus(FriendStatus.Declined);
   }
 
   // Block friend
   private block() {
     console.log("Blocking FR - friendID: " + this.friend.friendID);
-    this.friendStatusBHS.next(this.friend.friendStatus = FriendStatus.Blocked);
-    this.saveChanges();
+    this.changeFriendStatus(FriendStatus.Blocked);
   }
 
   // Remove friend
   private remove() {
     console.log("Removing friend - friendID: " + this.friend.friendID);
+    this.friendStatusBHS.next(FriendStatus.Removed);
     this.api.deleteFriend(this.friend.friendID).subscribe(res => console.log(res), err => console.log(err));
+  }
+
+  // Add friend(s) (send friend request(s))
+  private add(friendEmails: string[]) {
+    this.api.addFriendsByEmail(friendEmails).subscribe(res => console.log(res), err => console.log(err));
+    this.friendStatusBHS.next(FriendStatus.Pending);
   }
 
   public executeAction(actionName: string) {
@@ -115,7 +126,8 @@ export class FriendsActionButtonComponent implements OnInit {
 
   public getKeys = (obj: Object) => Object.keys(obj);
 
-  private saveChanges() {
+  private changeFriendStatus(newFriendStatus: FriendStatus) {
+    this.friendStatusBHS.next(this.friend.friendStatus = newFriendStatus);
     this.api.editFriend(this.friend).subscribe(res => console.log(res), err => console.log(err));
   }
 }

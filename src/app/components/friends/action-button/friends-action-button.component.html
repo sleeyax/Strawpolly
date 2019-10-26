@@ -1,5 +1,5 @@
 <div class="btn-group" mdbDropdown>
-    <button mdbDropdownToggle type="button" mdbBtn class="dropdown-toggle waves-light" [ngClass]="'btn-' + color" mdbWavesEffect>
+    <button mdbDropdownToggle type="button" mdbBtn class="dropdown-toggle waves-light" [ngClass]="'btn-' + color" mdbWavesEffect [disabled]="this.isDisabled">
         {{text}}
     </button>
 
