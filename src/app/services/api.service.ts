@@ -137,7 +137,19 @@ export class ApiService {
     return this.sendPut(`${this.friendsResource}/${friend.friendID}`, friend);
   }
 
+  /**
+   * Delete friends relationship
+   * @param friendID
+   */
   public deleteFriend(friendID: number) {
     return this.sendDelete(`${this.friendsResource}/${friendID}`);
+  }
+
+  /**
+   * Mass-add friends by email
+   * @param friendEmails
+   */
+  public addFriendsByEmail(friendEmails: string[]) {
+    return this.sendPost(`${this.friendsResource}`, {friendEmails});
   }
 }
