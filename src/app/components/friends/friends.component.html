@@ -1,9 +1,17 @@
 <div class="container">
+    <h2>Friends</h2>
+
     <div *ngIf="friendRequests?.length > 0">
-        <h2>Friend requests</h2>
+        <h3>Friend requests</h3>
         <friend-list [friends]="friendRequests" [isIncoming]="true"></friend-list>
     </div>
 
-    <h2>Friends</h2>
-    <friend-list [friends]="friends" [isIncoming]="false"></friend-list>
+    <friend-request-field title="Add friends" subtitle="Emails are separated by a semicolon (;)" separator=";"></friend-request-field>
+    <h3>List</h3>
+    <div *ngIf="friends?.length > 0; else noFriends">
+        <friend-list [friends]="friends" [isIncoming]="false"></friend-list>
+    </div>
+    <ng-template #noFriends>
+        <span>You don't have any friends yet :(</span>
+    </ng-template>
 </div>
