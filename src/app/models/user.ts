@@ -1,8 +1,19 @@
 export default class User {
+  public memberID: number;
+  public firstName: string;
+  public lastName: string;
+  public email: string;
+  public password: string;
+
   constructor(
-    public firstName: string,
-    public lastName: string,
-    public email: string,
-    public password: string
-  ) {};
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  };
 }
