@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {Answer, Poll} from '../../models/poll';
-import {ApiService} from '../../services/api.service';
+import {Answer, Poll} from '../../../models/poll';
+import {ApiService} from '../../../services/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
