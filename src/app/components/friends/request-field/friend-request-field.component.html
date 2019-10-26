@@ -1,0 +1,12 @@
+<form [formGroup]="friendRequestForm" (ngSubmit)="onFormSubmit()">
+    <h3 *ngIf="title">{{title}}</h3>
+    <p>{{subtitle}}</p>
+    <div class="form-row">
+        <div class="col-8">
+            <input formControlName="emails" mdbInput type="text" class="form-control" placeholder="Emails">
+        </div>
+        <div class="col-4">
+            <button class="btn btn-info btn-block" type="submit">Add</button>
+        </div>
+    </div>
+</form>

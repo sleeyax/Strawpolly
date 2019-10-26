@@ -11,6 +11,7 @@ import {
 import {FriendsComponent} from '../components/friends/friends.component';
 import {FriendsActionButtonComponent} from '../components/friends/action-button/friends-action-button.component';
 import {FriendsListComponent} from '../components/friends/list/friends-list.component';
+import {FormsModule} from './forms.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {FriendsListComponent} from '../components/friends/list/friends-list.comp
     CommonModule,
     TableModule,
     ButtonsModule,
-    DropdownModule
+    DropdownModule,
+    FormsModule
   ],
   exports: [
     FriendsComponent

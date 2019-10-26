@@ -6,12 +6,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ButtonsModule, InputsModule} from 'angular-bootstrap-md';
 import {RouterModule} from '@angular/router';
 import {PollFormComponent} from '../components/poll.form/poll.form.component';
+import {FriendRequestFieldComponent} from '../components/friends/request-field/friend-request-field.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
-    PollFormComponent
+    PollFormComponent,
+    FriendRequestFieldComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import {PollFormComponent} from '../components/poll.form/poll.form.component';
   exports: [
     LoginComponent,
     RegisterComponent,
-    PollFormComponent
+    PollFormComponent,
+    FriendRequestFieldComponent
   ]
 })
 export class FormsModule { }
