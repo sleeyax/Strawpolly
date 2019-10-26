@@ -115,11 +115,17 @@ export class ApiService {
   }
 
   /**
-   * Returns a list of all friends
-   * @param memberId
+   * Returns a list of all friends (of all FriendStatuses)
    */
   public getFriends() {
     return this.sendGet<Friend[]>(`${this.friendsResource}`);
+  }
+
+  /**
+   * Returns a list of all accepted friends
+   */
+  public getVerifiedFriends() {
+    return this.sendGet<Friend[]>(`${this.friendsResource}/accepted`);
   }
 
   /**
