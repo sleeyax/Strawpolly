@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PollFormComponent } from './poll.form.component';
+import { PollFormComponent } from './poll-form.component';
 
-describe('Poll.FormComponent', () => {
+describe('PollFormComponent', () => {
   let component: PollFormComponent;
   let fixture: ComponentFixture<PollFormComponent>;
 

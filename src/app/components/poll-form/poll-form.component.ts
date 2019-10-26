@@ -5,9 +5,9 @@ import {ApiService} from '../../services/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-poll.form',
-  templateUrl: './poll.form.component.html',
-  styleUrls: ['./poll.form.component.scss']
+  selector: 'app-poll-form',
+  templateUrl: './poll-form.component.html',
+  styleUrls: ['./poll-form.component.scss']
 })
 export class PollFormComponent implements OnInit {
   public formSubmitted: boolean = false;
