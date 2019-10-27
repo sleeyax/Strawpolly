@@ -15,6 +15,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SecurityInterceptor} from './services/interceptors/security.interceptor.service';
 import {DashboardModule} from './modules/dashboard.module';
 import {FriendsModule} from './modules/friends.module';
+import {PollsModule} from './modules/polls.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {FriendsModule} from './modules/friends.module';
     HeaderModule,
     DashboardModule,
     FriendsModule,
+    PollsModule,
     MyReactiveFormsModule,
     HttpClientModule
   ],
