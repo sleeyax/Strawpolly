@@ -1,59 +1,65 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Answer, Poll} from '../../../models/poll';
 import {ApiService} from '../../../services/api.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Friend} from '../../../models/friend';
 
 @Component({
-  selector: 'app-poll-form',
+  selector: 'poll-form',
   templateUrl: './poll-form.component.html',
   styleUrls: ['./poll-form.component.scss']
 })
 export class PollFormComponent implements OnInit {
   public formSubmitted: boolean = false;
-  public pollForm = this.fb.group({
-    title: ['', [Validators.required]],
-    fields: this.fb.array([this.createField()]),
-    invitedFriends: ['', Validators.required]
-  });
-  // whether or not the form is used to edit a poll instead of creating one
-  public isEdit: boolean = false;
-  private pollId: number = null;
-
+  public pollForm: FormGroup;
+  // pollId of poll to edit (optional)
+  @Input()
+  public pollId: number;
+  // list of friends that can be invited to this poll
   public friends: Friend[];
 
-  constructor(
-    private fb: FormBuilder,
-    private api: ApiService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
+    this.pollForm = this.fb.group({
+      title: ['', [Validators.required]],
+      optionFields: this.fb.array([this.createOptionfield()]),
+      invitedFriends: [[], [Validators.required]]
+    });
+  }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = Number.parseInt(params.get('id'));
-      if (!isNaN(id) && id != null) {
-        this.pollId = id;
-        this.isEdit = true;
-        this.populateFields(id);
-      }
-    });
     this.api.getVerifiedFriends().subscribe(
-      friends => this.friends = friends.map(f => this.appendFullName(f)),
+      friends => {
+        this.friends = friends.map(f => this.appendFullName(f));
+        if (this.pollId != null)
+          this.fetchPoll(this.pollId, (poll) => this.populateFields(poll));
+      },
+      err => console.error(err)
+    );
+  }
+
+  /**
+   * Get poll by specified id and pass the result to specified callback
+   * @param pollId
+   * @param cb
+   */
+  private fetchPoll(pollId: number, cb: Function) {
+    this.api.getPoll(pollId).subscribe(
+      poll => cb(poll),
       err => console.error(err)
     );
   }
 
   onFormSubmit() {
     // TODO: check if form is valid
-    const answers = this.pollForm.controls.fields.value
+    const answers = this.pollForm.controls.optionFields.value
       .filter((field) => field != "")
       .map((field) => new Answer(field));
 
-    const poll = new Poll(this.pollId, this.pollForm.value.title, answers, this.pollForm.value.invitedFriends);
+    const poll = new Poll(this.pollId != null ? this.pollId : null, this.pollForm.value.title, answers, this.pollForm.value.invitedFriends);
+    console.log(this.pollForm);
 
-    const apiMethod = (poll) => this.isEdit ? this.api.editPoll(poll) : this.api.createPoll(poll);
+    const apiMethod = (poll) => this.pollId != null ? this.api.editPoll(poll) : this.api.createPoll(poll);
 
     // TODO: catch errors
     apiMethod(poll).subscribe(
@@ -79,7 +85,7 @@ export class PollFormComponent implements OnInit {
   /**
    * Creates an empty 'option' field
    */
-  private createField() {
+  private createOptionfield() {
     return this.fb.control('');
   }
 
@@ -87,30 +93,26 @@ export class PollFormComponent implements OnInit {
    * Fires whenever a field has focus
    * @param index
    */
-  public onFieldFocused(index: number) {
-    const fieldsCount = this.fields.length;
+  public onOptionFieldFocused(index: number) {
+    const fieldsCount = this.optionFields.length;
     if (fieldsCount - 1 == index)
-      this.fields.push(this.createField());
+      this.optionFields.push(this.createOptionfield());
   }
 
   /**
-   * Returns all dynamically added form 'option' fields
+   * Returns all dynamically added form 'option' optionFields
    */
-  public get fields() {
-    return this.pollForm.get('fields') as FormArray;
+  public get optionFields() {
+    return this.pollForm.get('optionFields') as FormArray;
   }
 
   /**
-   * Populate fields with data from specified poll
-   * @param pollId
+   * Populate optionFields with data from specified poll
+   * @param poll
    */
-  private populateFields(pollId: number) {
-    this.api.getPoll(pollId).subscribe(poll => {
-      this.pollForm.controls.title.setValue(poll.name);
-      this.pollForm.controls.fields = this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]))
-      // this.pollForm.controls.invitedFriends = this.fb.array(poll.participants.map(participant => [participant, Validators.required]));
-      // TODO: update invited friends
-      console.log(this.pollForm.controls.invitedFriends);
-    }, err => console.log(err));
+  private populateFields(poll: Poll) {
+    this.pollForm.controls.title.setValue(poll.name);
+    this.pollForm.controls.optionFields = this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]));
+    this.pollForm.controls.invitedFriends.patchValue(poll.participants.map(p => p.memberID));
   }
 }
