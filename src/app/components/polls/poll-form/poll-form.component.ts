@@ -4,6 +4,8 @@ import {Poll} from '../../../models/poll';
 import {ApiService} from '../../../services/api.service';
 import {Router} from '@angular/router';
 import {Friend} from '../../../models/friend';
+import PollAnswer from '../../../models/poll-answer';
+import {PollParticipant} from '../../../models/poll-participant';
 
 @Component({
   selector: 'poll-form',
@@ -55,7 +57,12 @@ export class PollFormComponent implements OnInit {
     const answers = this.pollForm.controls.optionFields.value
       .filter((field) => field != "");
 
-    const poll = new Poll(this.pollId != null ? this.pollId : null, this.pollForm.value.title, answers, this.pollForm.value.invitedFriends);
+    const poll = new Poll(
+      this.pollId != null ? this.pollId : null,
+      this.pollForm.value.title,
+      answers.map(a => new PollAnswer(null, a)),
+      this.pollForm.value.invitedFriends.map(friendId => new PollParticipant(friendId))
+    );
     console.log(this.pollForm);
 
     const apiMethod = (poll) => this.pollId != null ? this.api.editPoll(poll) : this.api.createPoll(poll);
@@ -111,7 +118,7 @@ export class PollFormComponent implements OnInit {
    */
   private populateFields(poll: Poll) {
     this.pollForm.controls.title.setValue(poll.name);
-    this.pollForm.controls.optionFields = this.fb.array(poll.answers.map(answer => [answer,  Validators.required]));
-    this.pollForm.controls.invitedFriends.patchValue(poll.participantIds);
+    this.pollForm.controls.optionFields = this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]));
+    this.pollForm.controls.invitedFriends.patchValue(poll.participants.map(p => p.participant.memberID));
   }
 }

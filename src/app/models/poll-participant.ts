@@ -1,5 +1,9 @@
+import User from './user';
+
 export class PollParticipant {
-  public pollParticipantID: number;
-  public pollID: number;
-  constructor(public memberID: number) {}
+  public memberID: number;
+  public participant: User;
+  constructor(memberID: number) {
+    this.memberID = memberID;
+  }
 }
