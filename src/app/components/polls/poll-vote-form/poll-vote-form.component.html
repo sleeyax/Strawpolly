@@ -1,0 +1,12 @@
+<div class="container">
+    <form [formGroup]="pollVoteForm" (ngSubmit)="onFormSubmit()">
+        <h2 class="text-center">{{poll.name}}</h2>
+        <div *ngFor="let answer of poll.answers; let i = index">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="{{i}}" value="{{answer}}" formControlName="option">
+                <label class="custom-control-label" for="{{i}}">{{answer}}</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Vote</button>
+    </form>
+</div>
