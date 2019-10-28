@@ -8,13 +8,15 @@ import {RouterModule} from '@angular/router';
 import {PollFormComponent} from '../components/polls/poll-form/poll-form.component';
 import {FriendRequestFieldComponent} from '../components/friends/request-field/friend-request-field.component';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {PollVoteFormComponent} from '../components/polls/poll-vote-form/poll-vote-form.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
     PollFormComponent,
-    FriendRequestFieldComponent
+    FriendRequestFieldComponent,
+    PollVoteFormComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
     LoginComponent,
     RegisterComponent,
     PollFormComponent,
-    FriendRequestFieldComponent
+    FriendRequestFieldComponent,
+    PollVoteFormComponent
   ]
 })
 export class FormsModule { }

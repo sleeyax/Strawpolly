@@ -8,6 +8,7 @@ import {Friend} from '../../models/friend';
   styleUrls: ['./friends.component.scss']
 })
 export class FriendsComponent implements OnInit {
+  // TODO: manage state of all subcomponents & modules within this component
   public friends: Friend[];
   public friendRequests: Friend[];
 

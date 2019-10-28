@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {Poll} from '../../models/poll';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,15 +9,19 @@ import {Router} from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   public polls: Poll[] = [];
+  public openPolls: Poll[] = [];
 
-  constructor(private api: ApiService, private router: Router) {
+  constructor(private api: ApiService) {}
+
+  ngOnInit() {
     this.api.getPolls().subscribe(
       (res) => this.polls = res,
       (err) => console.log(err)
     );
-  }
-
-  ngOnInit() {
+    this.api.getOpenPolls().subscribe(
+      (res) => this.openPolls = res,
+      (err) => console.log(err)
+    );
   }
 
   public shorten(answer: string, length: number = 30) {
@@ -31,5 +34,9 @@ export class DashboardComponent implements OnInit {
       // 'refresh' page
       this.polls = this.polls.filter(poll => poll.pollID != pollID);
     }, err => console.error(err));
+  }
+
+  public removeParticipant(pollID: number) {
+    console.log('Removing this member as a participant of poll ' + pollID);
   }
 }

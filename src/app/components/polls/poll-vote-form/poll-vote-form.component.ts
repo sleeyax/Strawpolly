@@ -24,7 +24,7 @@ export class PollVoteFormComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id = parseInt(params.get('id'));
       if (!isNaN(id) && id != null)
-        this.api.getInvitedPoll(id).subscribe(
+        this.api.getOpenPoll(id).subscribe(
           res => this.poll = res,
           err => console.error(err)
         );

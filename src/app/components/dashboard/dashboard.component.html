@@ -27,3 +27,24 @@
         </div>
     </div>
 </div>
+
+<div class="container mt-3" *ngIf="openPolls.length > 0">
+    <div class="text-center">
+        <h2>Open polls</h2>
+    </div>
+    <div class="row">
+        <div class="col" *ngFor="let poll of openPolls">
+            <mdb-card>
+                <mdb-card-body>
+                    <mdb-card-title>
+                        <h4>{{poll.name}}</h4>
+                    </mdb-card-title>
+                    <div class="flex-row">
+                        <a class="card-link" [routerLink]="['polls/vote', poll.pollID]">Participate</a>
+                        <a class="card-link" (click)="removeParticipant(poll.pollID)">Remove</a>
+                    </div>
+                </mdb-card-body>
+            </mdb-card>
+        </div>
+    </div>
+</div>

@@ -99,7 +99,22 @@ export class ApiService {
   }
 
   /**
-   * Edit poll
+   * Get poll member is invited to
+   * @param pollId
+   */
+  public getOpenPoll(pollId: number) {
+    return this.sendGet<Poll>(`${this.pollsResource}/open/${pollId}`);
+  }
+
+  /**
+   * Get all polls current member is invited to
+   */
+  public getOpenPolls() {
+    return this.sendGet<Poll[]>(`${this.pollsResource}/open`);
+  }
+
+  /**
+   * Edit pollId
    * @param poll
    */
   public editPoll(poll: Poll) {
@@ -107,7 +122,7 @@ export class ApiService {
   }
 
   /**
-   * Delete poll with specified id
+   * Delete pollId with specified id
    * @param pollId
    */
   public deletePoll(pollId: number) {
