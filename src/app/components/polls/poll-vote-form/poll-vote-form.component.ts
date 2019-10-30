@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../../../services/api.service';
 import {Poll} from '../../../models/poll';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import PollVote from '../../../models/poll-vote';
 
 @Component({
   selector: 'app-poll-vote-form',
@@ -32,6 +33,15 @@ export class PollVoteFormComponent implements OnInit {
   }
 
   public onFormSubmit() {
-    console.log(this.pollVoteForm);
+    const option = this.pollVoteForm.value.option;
+    if (option != "")
+      this.submitVote(this.poll.pollID, option);
+  }
+
+  private submitVote(pollId: number, answerId: number) {
+    this.api.submitVote(new PollVote(pollId, answerId)).subscribe(
+      res => console.log(res),
+      err => console.error(err)
+    );
   }
 }

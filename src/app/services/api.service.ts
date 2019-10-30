@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import User from '../models/user';
 import {Poll} from '../models/poll';
 import {Friend} from '../models/friend';
+import PollVote from '../models/poll-vote';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class ApiService {
   private readonly membersResource: string = '/members';
   private readonly pollsResource: string = '/polls';
   private readonly friendsResource: string = '/friends';
+  private readonly voteResource: string = '/vote';
 
   constructor(private http: HttpClient) {}
 
@@ -172,5 +174,13 @@ export class ApiService {
    */
   public addFriendsByEmail(friendEmails: string[]) {
     return this.sendPost(`${this.friendsResource}`, {friendEmails});
+  }
+
+  /**
+   * Vote on a poll
+   * @param vote
+   */
+  public submitVote(vote: PollVote) {
+    return this.sendPost(`${this.voteResource}`, vote);
   }
 }
