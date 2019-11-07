@@ -48,7 +48,6 @@ export class DashboardComponent implements OnInit {
    * @param poll
    */
   public hasAnswered(poll: Poll) {
-    const token: Token = this.auth.getCurrentToken();
-    return poll.participants.some(p => p.hasAnswered == true && p.participant.memberID == token.MemberId);
+    return poll.vote != undefined;
   }
 }

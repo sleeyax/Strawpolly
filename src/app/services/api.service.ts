@@ -183,4 +183,12 @@ export class ApiService {
   public submitVote(vote: PollVote) {
     return this.sendPost(`${this.voteResource}`, vote);
   }
+
+  /**
+   * Change answer on a specific poll
+   * @param vote
+   */
+  public editVote(vote: PollVote) {
+    return this.sendPut(`${this.voteResource}`, vote);
+  }
 }
