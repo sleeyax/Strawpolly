@@ -18,4 +18,16 @@ export default class Token {
   getClaim(key: string) {
     return this.payload[key];
   }
+
+  get MemberId() {
+    return this.getClaim('MemberID');
+  }
+
+  get Email(): string {
+    return this.getClaim('Email');
+  }
+
+  get FirstName(): string {
+    return this.getClaim('FirstName');
+  }
 }
