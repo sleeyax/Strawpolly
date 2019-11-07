@@ -33,7 +33,7 @@ export class SecurityInterceptor implements HttpInterceptor {
           this.router.navigate(['login']);
         }
 
-        return throwError("unauthorized");
+        return throwError(err.error);
       }));
   }
 }
