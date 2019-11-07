@@ -39,10 +39,15 @@
                     <mdb-card-title>
                         <h4>{{poll.name}}</h4>
                     </mdb-card-title>
-                    <div class="flex-row">
+                    <div class="flex-row" *ngIf="hasAnswered(poll); else notAnswered">
+                        <a class="card-link" [routerLink]="['polls/vote', poll.pollID]">Edit vote</a>
+                        <a class="card-link" (click)="removeParticipant(poll.pollID)">Remove</a>
+                        <span class="float-right text-success">Answered</span>
+                    </div>
+                    <ng-template #notAnswered>
                         <a class="card-link" [routerLink]="['polls/vote', poll.pollID]">Participate</a>
                         <a class="card-link" (click)="removeParticipant(poll.pollID)">Remove</a>
-                    </div>
+                    </ng-template>
                 </mdb-card-body>
             </mdb-card>
         </div>

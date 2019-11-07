@@ -1,9 +1,8 @@
 import User from './user';
 
 export class PollParticipant {
-  public memberID: number;
+  public pollParticipantID: number;
   public participant: User;
-  constructor(memberID: number) {
-    this.memberID = memberID;
-  }
+  public hasAnswered: boolean;
+  constructor(public memberID: number) {}
 }

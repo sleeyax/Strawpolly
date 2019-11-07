@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {Poll} from '../../models/poll';
+import {StorageService} from '../../services/storage.service';
+import Token from '../../helpers/token';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +14,7 @@ export class DashboardComponent implements OnInit {
   public polls: Poll[] = [];
   public openPolls: Poll[] = [];
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private auth: AuthenticationService) {}
 
   ngOnInit() {
     this.api.getPolls().subscribe(
@@ -38,5 +41,14 @@ export class DashboardComponent implements OnInit {
 
   public removeParticipant(pollID: number) {
     console.log('Removing this member as a participant of poll ' + pollID);
+  }
+
+  /**
+   * Check if the current member has answered to specified poll
+   * @param poll
+   */
+  public hasAnswered(poll: Poll) {
+    const token: Token = this.auth.getCurrentToken();
+    return poll.participants.some(p => p.hasAnswered == true && p.participant.memberID == token.MemberId);
   }
 }

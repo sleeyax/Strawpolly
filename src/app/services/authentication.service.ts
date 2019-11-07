@@ -65,7 +65,7 @@ export class AuthenticationService {
   /**
    * Returns the token from storage or null if it doesn't exist or is invalid
    */
-  private getCurrentToken() {
+  public getCurrentToken() {
     const token = this.storage.token;
 
     if (!token) return null;
