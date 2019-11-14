@@ -1,5 +1,6 @@
 export default class User {
   public memberID: number;
+  public creationKey: string;
   public firstName: string;
   public lastName: string;
   public email: string;

@@ -10,6 +10,7 @@ export const appRoutes: Routes = [
   {path: '', component: DashboardComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'register/:key', component: RegisterComponent},
   {path: 'polls/new', component: PollComponent},
   {path: 'polls/edit/:id', component: PollComponent},
   {path: 'polls/vote/:id', component: PollVoteFormComponent},

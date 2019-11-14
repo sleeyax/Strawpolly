@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
   public formSubmitted : boolean = false;
   public registrationForm: FormGroup = this.fb.group({
+    creationKey: [null],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', Validators.required],
@@ -20,10 +21,15 @@ export class RegisterComponent implements OnInit {
   constructor(
     private api: ApiService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const key = params.get('key');
+      this.updateFields(key);
+    });
   }
 
   onFormSubmit() {
@@ -35,4 +41,10 @@ export class RegisterComponent implements OnInit {
       });
   }
 
+  private updateFields(creationKey: string) {
+    this.api.getMemberEmail(creationKey).subscribe(email => {
+      this.registrationForm.controls.creationKey.setValue(creationKey);
+      this.registrationForm.controls.email.setValue(email);
+    }, err => console.error(err));
+  }
 }
