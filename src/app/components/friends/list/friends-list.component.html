@@ -3,13 +3,15 @@
     <tr>
         <th [mdbTableSort]="friends" sortBy="friend.firstName">Firstname</th>
         <th [mdbTableSort]="friends" sortBy="last">Lastname</th>
+        <th [mdbTableSort]="friends" sortBy="last">Email</th>
         <th [mdbTableSort]="friends" sortBy="handle">{{isIncoming ? 'Action' : 'Status'}}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let friend of friends">
-        <th scope="row">{{friend.friend.firstName}}</th>
-        <td>{{friend.friend.lastName}}</td>
+        <th scope="row">{{friend.friend.firstName || '-'}}</th>
+        <td>{{friend.friend.lastName || '-'}}</td>
+        <td>{{friend.friend.email}}</td>
         <td>
             <friends-action-button [friend]="friend" [isIncoming]="isIncoming"></friends-action-button>
         </td>
