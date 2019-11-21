@@ -28,6 +28,10 @@ export class PollResultComponent implements OnInit {
 
   private calcVoteCompletion() {
     const votesCount = this.poll.answers.reduce((a, b) => a + b.votes, 0);
-    return (votesCount / this.poll.participants.length) * 100;
+    const participantsCount = this.poll.participants.length;
+    // prevent NaN being returned
+    if (participantsCount == 0 && votesCount == 0)
+      return 0;
+    return (votesCount / participantsCount) * 100;
   }
 }

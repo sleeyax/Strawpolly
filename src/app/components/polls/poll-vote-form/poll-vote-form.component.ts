@@ -53,7 +53,7 @@ export class PollVoteFormComponent implements OnInit {
     request.subscribe(
       res => {
         console.log(res);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/dashboard');
       } ,
       err => console.error(err)
     );

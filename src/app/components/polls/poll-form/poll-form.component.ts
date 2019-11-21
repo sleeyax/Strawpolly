@@ -71,7 +71,7 @@ export class PollFormComponent implements OnInit {
     apiMethod(poll).subscribe(
       (response) => {
         console.log(response);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/dashboard');
       },
       (err) => console.error(err)
     );
@@ -119,6 +119,8 @@ export class PollFormComponent implements OnInit {
   private populateFields(poll: Poll) {
     this.pollForm.controls.title.setValue(poll.name);
     this.pollForm.controls.optionFields = this.fb.array(poll.answers.map(answer => [answer.answer,  Validators.required]));
+    // add option field just in case
+    this.optionFields.push(this.createOptionfield());
     this.pollForm.controls.invitedFriends.patchValue(poll.participants.map(p => p.participant.memberID));
   }
 }
