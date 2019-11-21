@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatchFieldsValidator} from '../../validators/match-fields-validator';
+import EmailValidator from '../../validators/email-validator';
 
 @Component({
   selector: 'app-register',
@@ -14,8 +16,11 @@ export class RegisterComponent implements OnInit {
     creationKey: [null],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    email: ['', Validators.required],
-    password: ['', [Validators.required, Validators.minLength(8)]]
+    email: ['', [Validators.required, EmailValidator]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+    repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
+  }, {
+    validator: MatchFieldsValidator('password', 'repeatPassword')
   });
 
   constructor(
@@ -31,6 +36,10 @@ export class RegisterComponent implements OnInit {
 
   onFormSubmit() {
     this.formSubmitted = true;
+
+    if (this.registrationForm.invalid)
+      return;
+
     this.api.addMember(this.registrationForm.value)
       .subscribe((response) => {
         console.log(response);
@@ -43,5 +52,9 @@ export class RegisterComponent implements OnInit {
       this.registrationForm.controls.creationKey.setValue(creationKey);
       this.registrationForm.controls.email.setValue(email);
     }, err => console.error(err));
+  }
+
+  get form() {
+    return this.registrationForm.controls;
   }
 }

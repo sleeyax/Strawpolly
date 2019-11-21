@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {LoginComponent} from '../components/login/login.component';
 import {RegisterComponent} from '../components/register/register.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ButtonsModule, InputsModule} from 'angular-bootstrap-md';
+import {ButtonsModule, InputsModule, InputUtilitiesModule} from 'angular-bootstrap-md';
 import {RouterModule} from '@angular/router';
 import {PollFormComponent} from '../components/polls/poll-form/poll-form.component';
 import {FriendRequestFieldComponent} from '../components/friends/request-field/friend-request-field.component';
@@ -23,6 +23,7 @@ import {PollVoteFormComponent} from '../components/polls/poll-vote-form/poll-vot
     ReactiveFormsModule,
     ButtonsModule,
     InputsModule,
+    InputUtilitiesModule,
     RouterModule,
     NgSelectModule
   ],
