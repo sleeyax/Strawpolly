@@ -8,13 +8,16 @@
     <links>
         <!-- Links  left-->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link waves-light" mdbWavesEffect>About</a>
-            </li>
+            </li>-->
         </ul>
 
         <!--Links right-->
         <ul class="navbar-nav ml-auto nav-flex-icons" *ngIf="isLoggedIn; else notLoggedIn">
+            <li class="nav-item">
+                <a class="nav-link waves-light" routerLink="dashboard" routerLinkActive="active" mdbWavesEffect>Dashboard</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link waves-light" routerLink="polls/new" routerLinkActive="active" mdbWavesEffect>Create poll</a>
             </li>

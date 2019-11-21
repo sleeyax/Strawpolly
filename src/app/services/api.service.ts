@@ -7,6 +7,7 @@ import {Poll} from '../models/poll';
 import {Friend} from '../models/friend';
 import PollVote from '../models/poll-vote';
 import {map} from 'rxjs/operators';
+import Stats from '../models/stats';
 
 @Injectable({
   providedIn: 'root'
@@ -209,5 +210,21 @@ export class ApiService {
    */
   public editVote(vote: PollVote) {
     return this.sendPut(`${this.voteResource}`, vote);
+  }
+
+  /**
+   * Returns some statistics about the app
+   */
+  public getStats() {
+    return this.sendGet<Stats>(`/stats`);
+  }
+
+  /**
+   * Not an easter egg
+   */
+  public getCatFact(): Promise<string> {
+    return this.http.get('https://catfact.ninja/facts?limit=1')
+      .toPromise()
+      .then(res => res['data'][0]['fact']);
   }
 }
