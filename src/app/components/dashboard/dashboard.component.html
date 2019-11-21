@@ -1,7 +1,7 @@
 <div class="container mt-3">
     <div class="text-center">
         <h2>My polls</h2>
-        <p *ngIf="polls?.length == 0">Looks like haven't made any polls yet...</p>
+        <p *ngIf="polls?.length == 0">Looks like you haven't made any polls yet...</p>
     </div>
     <div class="row" *ngIf="polls?.length > 0">
         <div class="col" *ngFor="let poll of polls">
