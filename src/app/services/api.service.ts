@@ -112,6 +112,14 @@ export class ApiService {
   }
 
   /**
+   * Get poll voting results
+   * @param pollId
+   */
+  public getPollVoteResults(pollId: number) {
+    return this.sendGet<Poll>(`${this.pollsResource}/results/${pollId}`);
+  }
+
+  /**
    * Get poll member is invited to
    * @param pollId
    */

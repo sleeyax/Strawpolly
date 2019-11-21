@@ -1,0 +1,22 @@
+<div class="container mt-3">
+    <h2>{{poll.name}}</h2>
+    <div *ngIf="percentage != 100; else everyoneVoted">
+        <p>Percentage of invited members that have voted:</p>
+        <div class="progress mt-2 mb-2">
+            <div class="progress-bar" role="progressbar" [style.width]="percentage" aria-valuemin="0" aria-valuemax="100">
+                <span>{{percentage}}</span>
+            </div>
+        </div>
+    </div>
+    <ng-template #everyoneVoted>
+        <p class="text-success">All invited members have voted!</p>
+    </ng-template>
+
+    <b>Results:</b>
+
+    <ul *ngFor="let answer of poll.answers">
+        <li>{{answer.answer}} ({{answer.votes}} votes)</li>
+    </ul>
+
+    <button type="button" class="btn btn-primary" routerLink="/">Back</button>
+</div>

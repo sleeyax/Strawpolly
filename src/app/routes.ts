@@ -5,6 +5,7 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {FriendsComponent} from './components/friends/friends.component';
 import {PollComponent} from './components/polls/poll.component';
 import {PollVoteFormComponent} from './components/polls/poll-vote-form/poll-vote-form.component';
+import {PollResultComponent} from './components/polls/poll-result/poll-result.component';
 
 export const appRoutes: Routes = [
   {path: '', component: DashboardComponent},
@@ -14,5 +15,6 @@ export const appRoutes: Routes = [
   {path: 'polls/new', component: PollComponent},
   {path: 'polls/edit/:id', component: PollComponent},
   {path: 'polls/vote/:id', component: PollVoteFormComponent},
+  {path: 'polls/results/:id', component: PollResultComponent},
   {path: 'friends', component: FriendsComponent}
 ];

@@ -41,12 +41,13 @@
                     </mdb-card-title>
                     <div class="flex-row" *ngIf="hasAnswered(poll); else notAnswered">
                         <a class="card-link" [routerLink]="['polls/vote', poll.pollID]">Change answer</a>
-                        <a class="card-link" (click)="removeParticipant(poll.pollID)">Remove</a>
+                        <!--<a class="card-link" (click)="removeParticipant(poll.pollID)">Remove</a>-->
+                        <a class="card-link" [routerLink]="['polls/results', poll.pollID]">View results</a>
                         <span class="float-right text-success">Answered</span>
                     </div>
                     <ng-template #notAnswered>
                         <a class="card-link" [routerLink]="['polls/vote', poll.pollID]">Participate</a>
-                        <a class="card-link" (click)="removeParticipant(poll.pollID)">Remove</a>
+                           <!-- <a class="card-link" (click)="removeParticipant(poll.pollID)">Remove</a>-->
                     </ng-template>
                 </mdb-card-body>
             </mdb-card>
