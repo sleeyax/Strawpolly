@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from '../../../services/api.service';
 import {Poll} from '../../../models/poll';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -16,25 +16,23 @@ export class PollVoteFormComponent implements OnInit {
   public pollVoteForm: FormGroup;
   public isUpdate = false;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.pollVoteForm = this.fb.group({
       option: ['']
     });
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = parseInt(params.get('id'));
-      if (!isNaN(id) && id != null)
-        this.api.getOpenPoll(id).subscribe(
-          res => {
-            this.poll = res;
-            if (this.poll != undefined && this.poll.answers.some(a => a.answerID == this.poll.vote.answerID))
-              this.isUpdate = true;
-          },
-          err => console.error(err)
-        );
-    });
+    const id = parseInt(this.route.snapshot.paramMap.get('id'));
+    if (!isNaN(id) && id != null)
+      this.api.getOpenPoll(id).subscribe(
+        res => {
+          this.poll = res;
+          if (this.poll.vote != null && this.poll.answers.some(a => a.answerID == this.poll.vote.answerID))
+            this.isUpdate = true;
+        },
+        err => console.error(err)
+      );
   }
 
   public onFormSubmit() {
@@ -53,7 +51,10 @@ export class PollVoteFormComponent implements OnInit {
     }
 
     request.subscribe(
-      res => console.log(res),
+      res => {
+        console.log(res);
+        this.router.navigateByUrl('/');
+      } ,
       err => console.error(err)
     );
   }

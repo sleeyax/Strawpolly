@@ -3,7 +3,7 @@
         <h2 class="text-center">{{poll.name}}</h2>
         <div *ngFor="let answer of poll.answers; let i = index">
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="{{i}}" value="{{answer.answerID}}" [checked]="answer.answerID == poll.vote.answerID" formControlName="option">
+                <input type="radio" class="custom-control-input" id="{{i}}" value="{{answer.answerID}}" [checked]="poll.vote != null && answer.answerID == poll.vote.answerID" formControlName="option">
                 <label class="custom-control-label" for="{{i}}">{{answer.answer}}</label>
             </div>
         </div>

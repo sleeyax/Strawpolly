@@ -26,10 +26,7 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const key = params.get('key');
-      this.updateFields(key);
-    });
+    this.updateFields(this.route.snapshot.paramMap.get('key'));
   }
 
   onFormSubmit() {

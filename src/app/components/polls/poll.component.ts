@@ -13,10 +13,8 @@ export class PollComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = Number.parseInt(params.get('id'));
-      if (!isNaN(id) && id != null)
-        this.pollId = id;
-    });
+    const id = Number.parseInt(this.route.snapshot.paramMap.get('id'));
+    if (!isNaN(id) && id != null)
+      this.pollId = id;
   }
 }
