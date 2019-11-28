@@ -37,7 +37,7 @@ export class AuthenticationService {
   }
 
   private handleLoginError(response) {
-    console.log(response.error.message || 'Login failed');
+    // console.log(response || 'Login failed');
   }
 
   private handleLoginSuccess(response) {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
+import {AlertService} from '../../services/alert.service';
+import {AlertTypes} from '../../models/alert';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private auth: AuthenticationService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private alert: AlertService
   ) {}
 
   ngOnInit() {
@@ -34,6 +37,8 @@ export class LoginComponent implements OnInit {
       (err) => {
         // TODO: show login failed error in form
         this.formSubmitted = false;
+        console.log(err);
+        this.alert.show(AlertTypes.ERROR, err);
       },
       (response) => {
         // ...
