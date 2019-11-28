@@ -17,12 +17,13 @@ import {DashboardModule} from './modules/dashboard.module';
 import {FriendsModule} from './modules/friends.module';
 import {PollsModule} from './modules/polls.module';
 import { AlertComponent } from './components/alert/alert.component';
+import {UiModule} from './modules/ui.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AlertComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +35,7 @@ import { AlertComponent } from './components/alert/alert.component';
     HeaderModule,
     DashboardModule,
     FriendsModule,
+    UiModule,
     PollsModule,
     MyReactiveFormsModule,
     HttpClientModule
