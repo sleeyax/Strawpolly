@@ -68,7 +68,7 @@ export class ApiService {
    * @param creationKey
    */
   public getMemberEmail(creationKey: string): Observable<string> {
-    return this.sendGet<string>(`${this.membersResource}/key/${creationKey}`);
+    return this.http.get(`${this.api}${this.membersResource}/key/${creationKey}`, {responseType: 'text'});
   }
 
   /**
