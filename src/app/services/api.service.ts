@@ -6,7 +6,6 @@ import User from '../models/user';
 import {Poll} from '../models/poll';
 import {Friend} from '../models/friend';
 import PollVote from '../models/poll-vote';
-import {map} from 'rxjs/operators';
 import Stats from '../models/stats';
 
 @Injectable({
@@ -65,20 +64,11 @@ export class ApiService {
   }
 
   /**
-   * Returns all registered members
-   */
-  public getMembers() : Observable<User[]> {
-    return this.sendGet<User[]>(this.membersResource);
-  }
-
-  /**
    * Get the email address of a specific member by creation key
    * @param creationKey
    */
   public getMemberEmail(creationKey: string): Observable<string> {
-    return this.sendGet<User>(`${this.membersResource}/key/${creationKey}`).pipe(
-      map((x) => x.email)
-    );
+    return this.sendGet<string>(`${this.membersResource}/key/${creationKey}`);
   }
 
   /**
