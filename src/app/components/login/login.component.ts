@@ -35,10 +35,9 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.email,
       this.loginForm.value.password,
       (err) => {
-        // TODO: show login failed error in form
         this.formSubmitted = false;
         console.log(err);
-        this.alert.show(AlertTypes.ERROR, err);
+        this.alert.showError(err);
       },
       (response) => {
         // ...

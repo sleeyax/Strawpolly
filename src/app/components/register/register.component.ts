@@ -55,7 +55,10 @@ export class RegisterComponent implements OnInit {
     this.api.getMemberEmail(creationKey).subscribe(email => {
       this.registrationForm.controls.creationKey.setValue(creationKey);
       this.registrationForm.controls.email.setValue(email);
-    }, err => console.error(err));
+    }, err => {
+      console.error(err);
+      this.alert.showError(err);
+    });
   }
 
   get form() {
