@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '../../../services/api.service';
+import {AlertService} from '../../../services/alert.service';
+import {FriendAction, FriendsService} from '../../../services/states/friends.service';
 
 @Component({
   selector: 'friend-request-field',
@@ -20,7 +22,7 @@ export class FriendRequestFieldComponent implements OnInit {
   // List of emails of your friends
   public friendRequestForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private api: ApiService) {
+  constructor(private fb: FormBuilder, private api: ApiService, private alert: AlertService, private friendsService: FriendsService) {
     this.friendRequestForm = fb.group({
       'emails': ['', Validators.required]
     });
@@ -31,15 +33,23 @@ export class FriendRequestFieldComponent implements OnInit {
 
   private sendFriendRequests(friendEmails: string[]) {
     this.api.addFriendsByEmail(friendEmails).subscribe(
-      res => console.log(res),
-      err => console.log(err)
+      res => {
+        this.alert.showSuccess('Friend request sent successfully!');
+        this.friendsService.friendStateBehaviourSubject.next(FriendAction.inviteSent)
+      },
+      err => {
+        console.error(err);
+        this.alert.showUnexpectedError();
+      }
     );
   }
 
   public onFormSubmit() {
-    const emails = this.friendRequestForm.value.emails.split(this.separator);
-    // TODO: validate every email (regex pattern or using npm package perhaps?)
-    this.sendFriendRequests(emails);
+    const emails = this.friendRequestForm.value.emails
+      .split(this.separator)
+      .filter(e => e != '');
+    if (emails.length > 0)
+      this.sendFriendRequests(emails);
   }
 
 }
