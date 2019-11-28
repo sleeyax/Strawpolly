@@ -16,11 +16,13 @@ import {SecurityInterceptor} from './services/interceptors/security.interceptor.
 import {DashboardModule} from './modules/dashboard.module';
 import {FriendsModule} from './modules/friends.module';
 import {PollsModule} from './modules/polls.module';
+import { AlertComponent } from './components/alert/alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
