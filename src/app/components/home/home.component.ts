@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import Stats from '../../models/stats';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,15 +10,10 @@ import Stats from '../../models/stats';
 })
 export class HomeComponent implements OnInit {
 
-  private stats: Stats;
+  private stats: Observable<Stats> = this.api.getStats();
   public catFact: Promise<string> = this.api.getCatFact();
 
-  constructor(private api: ApiService) {
-    this.api.getStats().subscribe(
-      res => this.stats = res,
-      err => console.error(err)
-    );
-  }
+  constructor(private api: ApiService) {}
 
   ngOnInit() {}
 

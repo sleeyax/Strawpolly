@@ -9,11 +9,12 @@
     <friend-request-field title="Add friends" subtitle="Emails are separated by a semicolon (;)" separator=";"></friend-request-field>
     <div class="mt-3">
         <h3>List</h3>
-        <div *ngIf="friends?.length > 0; else noFriends">
+        <div *ngIf="friends && friends.length > 0; else noFriends">
             <friend-list [friends]="friends" [isIncoming]="false"></friend-list>
         </div>
         <ng-template #noFriends>
-            <span>You don't have any friends yet :(</span>
+            <app-spinner ></app-spinner>
+            <span *ngIf="friends && friends.length == 0">You don't have any friends yet :(</span>
         </ng-template>
     </div>
 

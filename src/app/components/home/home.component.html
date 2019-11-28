@@ -5,14 +5,14 @@
         <div class="col">
             <div class="card blue lighten-4">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{stats.memberCount}} members registered</h5>
+                    <h5 class="card-title text-center">{{(stats | async)?.memberCount}} members registered</h5>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card blue lighten-4">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{stats.pollCount}} polls created</h5>
+                    <h5 class="card-title text-center">{{(stats | async)?.pollCount}} polls created</h5>
                 </div>
             </div>
         </div>
@@ -21,6 +21,7 @@
         <div class="col text-center">
             <h3>Here's a random cat fact:</h3>
             <blockquote class="blockquote">
+                <app-spinner [show]="!(catFact | async)"></app-spinner>
                 <p>{{catFact | async}}</p>
                 <footer class="blockquote-footer">
                     <cite title="Source Title">
