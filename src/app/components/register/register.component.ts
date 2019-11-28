@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatchFieldsValidator} from '../../validators/match-fields-validator';
 import EmailValidator from '../../validators/email-validator';
+import {AlertService} from '../../services/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -27,11 +28,14 @@ export class RegisterComponent implements OnInit {
     private api: ApiService,
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alert: AlertService
   ) {}
 
   ngOnInit() {
-    this.updateFields(this.route.snapshot.paramMap.get('key'));
+    const creationKey = this.route.snapshot.paramMap.get('key');
+    if (creationKey)
+      this.updateFields(creationKey);
   }
 
   onFormSubmit() {
@@ -44,7 +48,7 @@ export class RegisterComponent implements OnInit {
       .subscribe((response) => {
         console.log(response);
         this.router.navigateByUrl('/login');
-      });
+      }, err => this.alert.showError(err));
   }
 
   private updateFields(creationKey: string) {

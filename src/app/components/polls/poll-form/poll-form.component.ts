@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {Friend} from '../../../models/friend';
 import PollAnswer from '../../../models/poll-answer';
 import {PollParticipant} from '../../../models/poll-participant';
+import {AlertService} from '../../../services/alert.service';
 
 @Component({
   selector: 'poll-form',
@@ -21,7 +22,12 @@ export class PollFormComponent implements OnInit {
   // list of friends that can be invited to this poll
   public friends: Friend[];
 
-  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private router: Router,
+    private alert: AlertService
+  ) {
     this.pollForm = this.fb.group({
       title: ['', [Validators.required]],
       optionFields: this.fb.array([this.createOptionfield()]),
@@ -52,7 +58,6 @@ export class PollFormComponent implements OnInit {
     );
   }
 
-  // TODO: check if form is valid
   onFormSubmit() {
     const answers = this.pollForm.controls.optionFields.value
       .filter((field) => field != "");
@@ -63,17 +68,17 @@ export class PollFormComponent implements OnInit {
       answers.map(a => new PollAnswer(null, a)),
       this.pollForm.value.invitedFriends.map(friendId => new PollParticipant(friendId))
     );
-    console.log(this.pollForm);
+   /* console.log(this.pollForm);
+    console.log(poll);*/
 
     const apiMethod = (poll) => this.pollId != null ? this.api.editPoll(poll) : this.api.createPoll(poll);
 
-    // TODO: catch errors
     apiMethod(poll).subscribe(
       (response) => {
         console.log(response);
         this.router.navigateByUrl('/dashboard');
       },
-      (err) => console.error(err)
+      (err) => this.alert.showError(err)
     );
   }
 
